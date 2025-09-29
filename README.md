@@ -18,7 +18,7 @@ It now features an event-driven design using callbacks, allowing your main sketc
 1. **Arduino Library Manager:**  
    * Open the Arduino IDE.  
    * Go to `Sketch` \> `Include Library` \> `Manage Libraries...`.  
-   * Search for "SimpleNetManager" and click `Install`. (Note: This step is for when the library is published).  
+   * Search for "SimpleNetManager" and click `Install`.
 2. **Install from .ZIP:**  
    * Download this repository as a .ZIP file.  
    * In the Arduino IDE, go to `Sketch` \> `Include Library` \> `Add .ZIP Library...`.  
