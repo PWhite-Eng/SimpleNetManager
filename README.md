@@ -27,37 +27,37 @@ It now features an event-driven design using callbacks, allowing your main sketc
 
 The library is now event-driven. You can register callback functions in `setup()` that will automatically execute when the network status changes. The `netManager.loop()` function must still be called on every iteration of your sketch's main `loop()`.
 ```c
-\#include \<SPI.h\>  
-\#include \<Ethernet.h\>  
-\#include "SimpleNetManager.h"
+#include <SPI.h>  
+#include <Ethernet.h>  
+#include "SimpleNetManager.h"
 
 // The library is now in a namespace to prevent naming conflicts.  
 using namespace SimpleNet;
 
 // Define the MAC address for your Ethernet shield.  
-byte mac\[\] \= { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 // Instantiate the network manager.  
 // You can pass 'Serial' to the constructor to enable debug messages.  
-SimpleNetManager netManager(mac, \&Serial);
+SimpleNetManager netManager(mac, &Serial);
 
-// \--- Callback Functions \---  
+// --- Callback Functions ---  
 // This function will be called automatically when the network connects.  
 void onNetworkConnect() {  
-  Serial.println("\\n--- Network Connected\! \---");  
+  Serial.println("\n--- Network Connected! ---");  
   Serial.print("IP Address: ");  
   Serial.println(Ethernet.localIP());  
 }
 
 // This function will be called automatically when the network disconnects.  
 void onNetworkDisconnect() {  
-  Serial.println("\\n--- Network Disconnected\! \---");  
+  Serial.println("\n--- Network Disconnected! ---");  
   Serial.println("Attempting to reconnect...");  
 }
 
 void setup() {  
   Serial.begin(9600);  
-  while (\!Serial) { ; }  
+  while (!Serial) { ; }  
     
   // Register our callback functions  
   netManager.onConnect(onNetworkConnect);  
@@ -74,7 +74,7 @@ void loop() {
 
   // Your main application logic can now run independently.  
   if (netManager.isConnected()) {  
-    // \--- Your networking code goes here \---  
+    // --- Your networking code goes here ---  
     // This part will only run when connected.  
   }  
 }
@@ -83,11 +83,11 @@ void loop() {
 
 All components are within the `SimpleNet` namespace.
 
-#### **SimpleNetManager(byte mac\[\], Stream\* debugStream \= nullptr)**
+#### **SimpleNetManager(byte mac[], Stream\* debugStream = nullptr)**
 
 The constructor.
 
-* **`mac\[\]`**: A 6-byte array for the MAC address.  
+* **`mac[]`**: A 6-byte array for the MAC address.  
 * **`debugStream`**: An optional pointer to a Stream object (like \&Serial) to print debug output.
 
 #### **void begin() & void begin(...)**
