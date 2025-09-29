@@ -5,10 +5,6 @@
 #include <SPI.h>
 #include <Ethernet.h>
 
-/**
- * @brief A namespace to contain all SimpleNetManager library components
- * and prevent potential naming conflicts with other libraries.
- */
 namespace SimpleNet {
 
 /**
@@ -29,85 +25,56 @@ enum NetState {
 class SimpleNetManager {
 public:
     /**
-     * @brief Constructor for the network manager.
-     * @param mac A byte array of length 6 containing the MAC address for the device.
-     * @param debugStream An optional pointer to a Stream object (like Serial) for debug output.
+     * @brief Constructor (Basic): Initializes with only the MAC address. CS pin defaults to 10.
+     * @param mac A byte array of length 6 for the MAC address.
      */
-    SimpleNetManager(byte mac[], Stream* debugStream = nullptr);
+    SimpleNetManager(byte mac[]);
 
     /**
-     * @brief Initializes the manager to use DHCP for obtaining an IP address.
+     * @brief Constructor (MAC + CS Pin): Initializes with MAC address and a custom Chip Select pin.
+     * @param mac A byte array of length 6 for the MAC address.
+     * @param csPin The chip select (CS) pin for the Ethernet module.
      */
+    SimpleNetManager(byte mac[], uint8_t csPin);
+
+    /**
+     * @brief Constructor (MAC + CS Pin + Debug): Initializes with MAC, CS pin, and a debug stream.
+     * @param mac A byte array of length 6 for the MAC address.
+     * @param csPin The chip select (CS) pin for the Ethernet module.
+     * @param debugStream A pointer to a Stream object (like &Serial) for debug output.
+     */
+    SimpleNetManager(byte mac[], uint8_t csPin, Stream* debugStream);
+
+    // --- Public Methods ---
     void begin();
-
-    /**
-     * @brief Initializes the manager to use a static IP configuration.
-     * @param ip The static IP address to assign to the device.
-     * @param dns The DNS server address.
-     * @param gateway The network gateway address.
-     * @param subnet The subnet mask.
-     */
     void begin(IPAddress ip, IPAddress dns, IPAddress gateway, IPAddress subnet);
-
-    /**
-     * @brief The main loop function that manages the connection state.
-     * @details This MUST be called on every iteration of the sketch's main loop() function.
-     * @return The current connection state (NetState).
-     */
     NetState loop();
-
-    /**
-     * @brief Checks if the device is fully connected to the network.
-     * @return true if the state is NET_CONNECTED, otherwise false.
-     */
     bool isConnected();
-
-    /**
-     * @brief Provides access to the underlying EthernetClient object.
-     * @details This is essential for making HTTP requests or establishing other TCP connections.
-     * @return A reference to the internal EthernetClient instance.
-     */
     EthernetClient& getClient();
-
-    /**
-     * @brief Sets the time interval between connection retry attempts.
-     * @param interval The time in milliseconds to wait between retries. Default is 10000.
-     */
     void setConnectionRetryInterval(long interval);
-
-    /**
-     * @brief Registers a callback function to be executed when a network connection is established.
-     * @param callback A pointer to a void function with no arguments, e.g., `void myConnectHandler()`.
-     */
     void onConnect(void (*callback)());
-
-    /**
-     * @brief Registers a callback function to be executed when the network connection is lost.
-     * @param callback A pointer to a void function with no arguments, e.g., `void myDisconnectHandler()`.
-     */
     void onDisconnect(void (*callback)());
 
 private:
-    // Internal state and logic
+    // --- Private Members ---
     byte          _mac[6];
     IPAddress     _ip;
     IPAddress     _dns;
     IPAddress     _gateway;
     IPAddress     _subnet;
     bool          _use_static_ip;
+    uint8_t       _csPin;
+    Stream* _debugStream;
 
     NetState      _currentState;
     unsigned long _lastConnectionAttempt;
-    long          _connectionInterval = 10000; // Default 10 seconds
+    long          _connectionInterval = 10000;
 
     EthernetClient _client;
-    Stream* _debugStream;
-
-    // Pointers to the callback functions
+    
     void (*_onConnectCallback)();
     void (*_onDisconnectCallback)();
 
-    // Private method to handle the connection logic
     void connect();
 };
 

@@ -8,21 +8,26 @@ using namespace SimpleNet;
 //-----------------------------------------------------
 // Network Configuration & Objects
 //-----------------------------------------------------
+// Define an override for the Chip Select (CS) pin if you aren't using the default (10).
+const uint8_t ETHERNET_CS_PIN = 4;
+
 // MAC address for the Ethernet shield.
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 // The server we want to connect to.
 const char server[] = "example.com";
 
-// --- Instantiation Examples ---
-// Create an instance of your network manager.
-//
-// OPTION 1: Without debug output
+// --- Instantiation Options ---
+// Choose ONE of the following three ways to create the network manager object.
+
+// OPTION 1: Basic (MAC address only, CS pin defaults to 10)
 // SimpleNetManager netManager(mac);
-//
-// OPTION 2: With debug output (Recommended)
-// We pass &Serial to enable helpful debug messages from the library.
-SimpleNetManager netManager(mac, &Serial);
+
+// OPTION 2: MAC address and custom CS pin (overrides the default)
+// SimpleNetManager netManager(mac, ETHERNET_CS_PIN);
+
+// OPTION 3: MAC, custom CS pin, and debug output (Recommended for development)
+SimpleNetManager netManager(mac, ETHERNET_CS_PIN, &Serial);
 
 //-----------------------------------------------------
 // Timing for periodic HTTP request
