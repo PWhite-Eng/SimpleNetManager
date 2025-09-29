@@ -1,0 +1,25 @@
+# KEYWORDS.TXT for SimpleNetManager Library
+
+#######################################
+# Class Names (KEYWORD1)
+#######################################
+SimpleNetManager	KEYWORD1
+NetState	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+begin	KEYWORD2
+loop	KEYWORD2
+isConnected	KEYWORD2
+getClient	KEYWORD2
+setConnectionRetryInterval	KEYWORD2
+onConnect	KEYWORD2
+onDisconnect	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+NET_DISCONNECTED	LITERAL1
+NET_CONNECTING	LITERAL1
+NET_CONNECTED	LITERAL1
