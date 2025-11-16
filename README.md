@@ -39,7 +39,7 @@ using namespace SimpleNet;
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 // Define the Chip Select (CS) pin if you are not using the default (pin 10).
-const uint8_t ETHERNET_CS_PIN = 4;
+// const uint8_t ETHERNET_CS_PIN = 4;
 
 // --- Instantiation ---
 // Create an instance of the network manager. Choose one of the following options.
@@ -50,8 +50,11 @@ const uint8_t ETHERNET_CS_PIN = 4;
 // Option 2: MAC and a custom CS pin
 // SimpleNetManager netManager(mac, ETHERNET_CS_PIN);
 
-// Option 3: MAC, custom CS pin, and debug output (Recommended)
-SimpleNetManager netManager(mac, ETHERNET_CS_PIN, &Serial);
+// Option 3: MAC and debug output (CS pin defaults to 10))
+SimpleNetManager netManager(mac, &Serial);
+
+// Option 4: MAC, custom CS pin, and debug output 
+// SimpleNetManager netManager(mac, ETHERNET_CS_PIN, &Serial);
 
 
 // --- Callback Functions ---
@@ -115,6 +118,14 @@ The library provides three flexible ways to create a `SimpleNetManager` object.
     - `mac[]`: A 6-byte array for the MAC address.
 
     - `csPin`: The pin to use for the Ethernet module's Chip Select.
+
+1. `SimpleNetManager(byte mac[], Stream* debugStream)`
+
+    - Constructor to enable debug output.
+
+    - `mac[]`: A 6-byte array for the MAC address.
+
+    - `debugStream`: A pointer to a Stream object (like &Serial) to print debug output.
 
 1. `SimpleNetManager(byte mac[], uint8_t csPin, Stream* debugStream)`
 

@@ -17,6 +17,13 @@ SimpleNetManager::SimpleNetManager(byte mac[], uint8_t csPin)
 }
 
 /**
+ * @brief Constructor (MAC + Debug): Delegates to the full constructor with default CS pin 10.
+ */
+SimpleNetManager::SimpleNetManager(byte mac[], Stream* debugStream)
+    : SimpleNetManager(mac, 10, debugStream) { // Default CS pin is 10
+}
+
+/**
  * @brief Constructor (Full): This is the main constructor that does all the setup work.
  */
 SimpleNetManager::SimpleNetManager(byte mac[], uint8_t csPin, Stream* debugStream) {

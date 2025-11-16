@@ -38,6 +38,13 @@ public:
     SimpleNetManager(byte mac[], uint8_t csPin);
 
     /**
+     * @brief Constructor (MAC + Debug): Initializes with MAC address and a debug stream. CS pin defaults to 10.
+     * @param mac A byte array of length 6 for the MAC address.
+     * @param debugStream A pointer to a Stream object (like &Serial) for debug output.
+     */
+    SimpleNetManager(byte mac[], Stream* debugStream);
+
+    /**
      * @brief Constructor (MAC + CS Pin + Debug): Initializes with MAC, CS pin, and a debug stream.
      * @param mac A byte array of length 6 for the MAC address.
      * @param csPin The chip select (CS) pin for the Ethernet module.
